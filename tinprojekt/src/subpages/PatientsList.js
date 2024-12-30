@@ -10,6 +10,11 @@ function PatientsList() {
         setCurrentPage(Number(event.target.id));
     };
 
+    const handleDelete = (userId) => {
+        console.log(`User with ID ${userId} has been deleted.`);
+        // Add logic to delete user data here
+    };
+
     const { Pacjent } = data;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -26,6 +31,7 @@ function PatientsList() {
                 <Link to={`/addpatienttest/${item.Pacjent_ID}`}><button>Add Test</button></Link>
                 <Link to={`/patientinfo/${item.Pacjent_ID}`}><button>View Info</button></Link>
                 <Link to={`/patienttests/${item.Pacjent_ID}`}><button>View Tests</button></Link>
+                <button onClick={() => handleDelete(item.Uzytkownik_ID)}>Delete User</button>
             </li>
         );
     });

@@ -1,5 +1,6 @@
 import React from 'react';
 import data from '../database.json';
+import {Link} from "react-router-dom";
 
 function PatientInfo() {
     const userId = 1; // Assuming the logged-in user has ID 1
@@ -16,6 +17,7 @@ function PatientInfo() {
             <p>Joined: {user.DataDolaczenia}</p>
             <h3>Patient Details</h3>
             <p>PESEL: {patient.PESEL}</p>
+            <Link to={`/modifypatientinfo/${userId}`}><button>Modify Info</button></Link>
         </div>
     );
 }

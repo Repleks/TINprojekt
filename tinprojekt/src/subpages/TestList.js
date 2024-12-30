@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import data from '../database.json';
 
-function TestList() {
+function TestList({ userRole }) {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
@@ -20,6 +21,7 @@ function TestList() {
                 <p>Nazwa Badania: {item.NazwaBadania}</p>
                 <p>Koszt: {item.Koszt}</p>
                 <p>Opis Badania: {item.OpisBadania}</p>
+                {userRole === 'admin' && <Link to={`/modifytestinfo/${item.Badanie_ID}`}><button>Modify Test</button></Link>}
             </li>
         );
     });

@@ -8,6 +8,8 @@ import PatientTests from './Subpages/PatientTests';
 import PatientsList from './Subpages/PatientsList';
 import PatientInfo from './Subpages/PatientInfo';
 import AddPatientTest from './Subpages/AddPatientTest';
+import ModifyPatientInfo from './Subpages/ModifyPatientInfo';
+import ModifyTestInfo from './Subpages/ModifyTestInfo';
 
 function App() {
     const [userRole, setUserRole] = useState(null);
@@ -27,8 +29,8 @@ function App() {
                     <ul>
                         <li><Link to="/">Main Page</Link></li>
                         <li><Link to="/testlist">Tests list</Link></li>
-                        {(userRole === 'user' || userRole ==="admin") && <li><Link to="/patienttests">Patient Tests</Link></li>}
-                        {(userRole === 'user' || userRole ==="admin") && <li><Link to="/patientinfo">Patient Info</Link></li>}
+                        {(userRole === 'user' || userRole ==="admin") && <li><Link to="/patienttests/1">Patient Tests</Link></li>}
+                        {(userRole === 'user' || userRole ==="admin") && <li><Link to="/patientinfo/1">Patient Info</Link></li>}
                         {userRole === 'admin' && <li><Link to="/patientslist">Patients List</Link></li>}
                         {userRole ? (
                             <li className="right"><LogoutButton setUserRole={setUserRole} /></li>
@@ -42,13 +44,15 @@ function App() {
                 </nav>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/testlist" element={<TestList />} />
+                    <Route path="/testlist" element={<TestList userRole={userRole} />} />
                     <Route path="/login" element={<Login onLogin={handleLogin} />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/patienttests/:id" element={(userRole === 'user' || userRole ==="admin") ? <PatientTests /> : <Navigate to="/login" />} />
                     <Route path="/patientslist" element={(userRole === 'user' || userRole ==="admin") ? <PatientsList /> : <Navigate to="/login" />} />
                     <Route path="/patientinfo/:id" element={(userRole === 'user' || userRole ==="admin") ? <PatientInfo /> : <Navigate to="/login" />} />
                     <Route path="/addpatienttest/:id" element={(userRole === 'user' || userRole ==="admin") ? <AddPatientTest /> : <Navigate to="/login" />} />
+                    <Route path="/modifypatientinfo/:id" element={(userRole === 'user' || userRole ==="admin") ? <ModifyPatientInfo /> : <Navigate to="/login" />} />
+                    <Route path="/modifytestinfo/:id" element={userRole === 'admin' ? <ModifyTestInfo /> : <Navigate to="/login" />} />
                 </Routes>
             </div>
         </Router>
