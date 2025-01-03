@@ -12,7 +12,7 @@ function PatientsList() {
 
     const handleDelete = (userId) => {
         console.log(`User with ID ${userId} has been deleted.`);
-        // Add logic to delete user data here
+        // jakaś logika tu kiedyś będzie
     };
 
     const { Pacjent } = data;
@@ -57,7 +57,7 @@ function PatientsList() {
     return (
         <div>
             <h2>Patients List</h2>
-            <ul>
+            <ul className="custom-list">
                 {renderItems}
             </ul>
             <ul id="page-numbers">

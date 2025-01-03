@@ -9,6 +9,7 @@ function AddPatientTest() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Add test', testId, date, 'for patient', id);
+        // jakaś logika tu kiedyś będzie
     };
 
     return (

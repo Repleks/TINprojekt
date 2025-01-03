@@ -8,6 +8,7 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        // jakaś logika tu kiedyś będzie
         console.log(`User registered: ${username}`);
         navigate('/');
     };

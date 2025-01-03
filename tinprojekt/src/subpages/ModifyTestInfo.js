@@ -13,7 +13,7 @@ function ModifyTestInfo() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic to update test information
+        // jakaś logika tu kiedyś będzie
         console.log(`Updated test ${id} info: ${name}, ${cost}, ${description}`);
         navigate('/testlist');
     };

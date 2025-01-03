@@ -47,7 +47,7 @@ function TestList({ userRole }) {
     return (
         <div>
             <h2>Tutaj lista badań</h2>
-            <ul>
+            <ul className="custom-list">
                 {renderItems}
             </ul>
             <ul id="page-numbers">

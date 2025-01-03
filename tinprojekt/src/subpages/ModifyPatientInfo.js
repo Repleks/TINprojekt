@@ -16,7 +16,7 @@ function ModifyPatientInfo() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logic to update patient information
+        // jakaś logika tu kiedyś będzie
         console.log(`Updated patient ${id} info: ${name}, ${surname}, ${email}, ${age}, ${pesel}`);
         navigate(`/patientinfo/${id}`);
     };

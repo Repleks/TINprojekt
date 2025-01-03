@@ -1,14 +1,15 @@
 import React from 'react';
 import data from '../database.json';
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function PatientInfo() {
-    const userId = 1; // Assuming the logged-in user has ID 1
+    const userId = 1;
+    // tutaj będzie się dało zarządzać zasobami
     const user = data.Uzytkownik.find(u => u.Uzytkownik_ID === userId);
     const patient = data.Pacjent.find(p => p.Uzytkownik_ID === userId);
 
     return (
-        <div>
+        <div className="patient-info">
             <h2>Patient Info</h2>
             <h3>User Details</h3>
             <p>Name: {user.Imie} {user.Nazwisko}</p>
