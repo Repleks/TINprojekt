@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #cccccc);
 }
 
 nav {
@@ -191,5 +192,30 @@ form button:hover {
 }
 
 .patient-info button:hover {
+  background-color: darkblue;
+}
+
+.home h1 {
+  font-size: 3em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.home h3 {
+  font-size: 1.5em;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.home a {
+  font-size: 1.2em;
+  color: white;
+  background-color: blue;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.home a:hover {
   background-color: darkblue;
 }

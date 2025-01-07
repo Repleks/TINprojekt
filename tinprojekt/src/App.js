@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
-import TestList from './Subpages/TestList';
-import Login from './Subpages/Login';
-import Register from './Subpages/Register';
-import PatientTests from './Subpages/PatientTests';
-import PatientsList from './Subpages/PatientsList';
-import PatientInfo from './Subpages/PatientInfo';
-import AddPatientTest from './Subpages/AddPatientTest';
-import ModifyPatientInfo from './Subpages/ModifyPatientInfo';
-import ModifyTestInfo from './Subpages/ModifyTestInfo';
+import TestList from './subpages/TestList';
+import Login from './subpages/Login';
+import Register from './subpages/Register';
+import PatientTests from './subpages/PatientTests';
+import PatientsList from './subpages/PatientsList';
+import PatientInfo from './subpages/PatientInfo';
+import AddPatientTest from './subpages/AddPatientTest';
+import ModifyPatientInfo from './subpages/ModifyPatientInfo';
+import ModifyTestInfo from './subpages/ModifyTestInfo';
+import AddTest from './subpages/AddTest';
 
 function App() {
     const [userRole, setUserRole] = useState(null);
@@ -57,6 +58,7 @@ function App() {
                     <Route path="/addpatienttest/:id" element={(userRole === 'user' || userRole ==="admin") ? <AddPatientTest /> : <Navigate to="/login" />} />
                     <Route path="/modifypatientinfo/:id" element={(userRole === 'user' || userRole ==="admin") ? <ModifyPatientInfo /> : <Navigate to="/login" />} />
                     <Route path="/modifytestinfo/:id" element={userRole === 'admin' ? <ModifyTestInfo /> : <Navigate to="/login" />} />
+                    <Route path="/addtest" element={userRole === 'admin' ? <AddTest /> : <Navigate to="/login" />} />
                 </Routes>
             </div>
         </Router>

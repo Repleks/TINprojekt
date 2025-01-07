@@ -53,6 +53,7 @@ function TestList({ userRole }) {
             <ul id="page-numbers">
                 {renderPageNumbers}
             </ul>
+            {userRole === 'admin' && <Link to="/addtest"><button>Add New Test</button></Link>}
         </div>
     );
 }
