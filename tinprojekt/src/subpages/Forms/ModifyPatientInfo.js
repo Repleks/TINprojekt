@@ -1,25 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import data from '../../database.json';
+import axios from 'axios';
 
 function ModifyPatientInfo() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const patient = data.Pacjent.find(p => p.Pacjent_ID === parseInt(id));
-    const user = data.Uzytkownik.find(u => u.Uzytkownik_ID === patient.Uzytkownik_ID);
+    const [patient, setPatient] = useState(null);
+    const [user, setUser] = useState(null);
 
-    const [name, setName] = useState(user.Imie);
-    const [surname, setSurname] = useState(user.Nazwisko);
-    const [email, setEmail] = useState(user.Email);
-    const [age, setAge] = useState(user.Wiek);
-    const [pesel, setPesel] = useState(patient.PESEL);
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/get/patient/${id}/info`)
+            .then(response => {
+                setPatient(response.data);
+                setUser(response.data);
+            })
+            .catch(error => {
+                console.error('There was an error fetching the patient info!', error);
+            });
+    }, [id]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // jakaś logika tu kiedyś będzie
-        console.log(`Updated patient ${id} info: ${name}, ${surname}, ${email}, ${age}, ${pesel}`);
-        navigate(`/patientinfo/${id}`);
+        axios.put(`http://localhost:3001/api/put/patient/${id}`, {
+            firstName: user.Imie,
+            lastName: user.Nazwisko,
+            email: user.Email,
+            age: user.Wiek,
+            pesel: patient.PESEL
+        })
+            .then(response => {
+                console.log('Patient updated successfully:', response.data);
+                navigate(`/patientinfo/${id}`);
+            })
+            .catch(error => {
+                console.error('There was an error updating the patient!', error);
+            });
     };
+
+    if (!patient || !user) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
@@ -27,23 +47,23 @@ function ModifyPatientInfo() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name:</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="text" value={user.Imie} onChange={(e) => setUser({ ...user, Imie: e.target.value })} />
                 </div>
                 <div>
                     <label>Surname:</label>
-                    <input type="text" value={surname} onChange={(e) => setSurname(e.target.value)} />
+                    <input type="text" value={user.Nazwisko} onChange={(e) => setUser({ ...user, Nazwisko: e.target.value })} />
                 </div>
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input type="email" value={user.Email} onChange={(e) => setUser({ ...user, Email: e.target.value })} />
                 </div>
                 <div>
                     <label>Age:</label>
-                    <input type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+                    <input type="number" value={user.Wiek} onChange={(e) => setUser({ ...user, Wiek: e.target.value })} />
                 </div>
                 <div>
                     <label>PESEL:</label>
-                    <input type="text" value={pesel} onChange={(e) => setPesel(e.target.value)} />
+                    <input type="text" value={patient.PESEL} onChange={(e) => setPatient({ ...patient, PESEL: e.target.value })} />
                 </div>
                 <button type="submit">Save Changes</button>
             </form>
