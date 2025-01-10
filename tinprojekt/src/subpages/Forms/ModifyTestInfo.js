@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import data from '../database.json';
+import data from '../../database.json';
 
 function ModifyTestInfo() {
     const { id } = useParams();

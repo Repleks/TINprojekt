@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './App.css';
-import TestList from './subpages/TestList';
-import Login from './subpages/Login';
-import Register from './subpages/Register';
-import PatientTests from './subpages/PatientTests';
-import PatientsList from './subpages/PatientsList';
-import PatientInfo from './subpages/PatientInfo';
-import AddPatientTest from './subpages/AddPatientTest';
-import ModifyPatientInfo from './subpages/ModifyPatientInfo';
-import ModifyTestInfo from './subpages/ModifyTestInfo';
-import AddTest from './subpages/AddTest';
+import TestList from './Subpages/TestList';
+import Login from './Subpages/Forms/Login';
+import Register from './Subpages/Forms/Register';
+import PatientTests from './Subpages/PatientTests';
+import PatientsList from './Subpages/PatientsList';
+import PatientInfo from './Subpages/PatientInfo';
+import AddPatientTest from './Subpages/Forms/AddPatientTest';
+import ModifyPatientInfo from './Subpages/Forms/ModifyPatientInfo';
+import ModifyTestInfo from './Subpages/Forms/ModifyTestInfo';
+import AddTest from './Subpages/Forms/AddTest';
 
 function App() {
     const [userRole, setUserRole] = useState(null);
