@@ -6,10 +6,26 @@ function AddTest() {
     const [testName, setTestName] = useState('');
     const [cost, setCost] = useState('');
     const [description, setDescription] = useState('');
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
+
+    const validate = () => {
+        const errors = {};
+        if (!testName) errors.testName = 'Test Name is required';
+        if (!cost) errors.cost = 'Cost is required';
+        if (isNaN(cost)) errors.cost = 'Cost must be a number';
+        if (!description) errors.description = 'Description is required';
+        return errors;
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
         axios.post('http://localhost:3001/api/post/test', { testName, cost, description })
             .then(response => {
                 console.log('New Test added successfully:', response.data);
@@ -32,6 +48,7 @@ function AddTest() {
                         onChange={(e) => setTestName(e.target.value)}
                         required
                     />
+                    {errors.testName && <p>{errors.testName}</p>}
                 </div>
                 <div>
                     <label>Cost:</label>
@@ -41,6 +58,7 @@ function AddTest() {
                         onChange={(e) => setCost(e.target.value)}
                         required
                     />
+                    {errors.cost && <p>{errors.cost}</p>}
                 </div>
                 <div>
                     <label>Description:</label>
@@ -49,6 +67,7 @@ function AddTest() {
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
+                    {errors.description && <p>{errors.description}</p>}
                 </div>
                 <button type="submit">Add Test</button>
             </form>

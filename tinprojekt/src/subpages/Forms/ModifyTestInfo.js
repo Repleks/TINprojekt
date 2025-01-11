@@ -6,6 +6,7 @@ function ModifyTestInfo() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [test, setTest] = useState(null);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         axios.get(`http://localhost:3001/api/get/tests`)
@@ -18,8 +19,23 @@ function ModifyTestInfo() {
             });
     }, [id]);
 
+    const validate = () => {
+        const errors = {};
+        if (!test.NazwaBadania) errors.testName = 'Test Name is required';
+        if (!test.Koszt) errors.cost = 'Cost is required';
+        if (isNaN(test.Koszt)) errors.cost = 'Cost must be a number';
+        if (!test.OpisBadania) errors.description = 'Description is required';
+        return errors;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
         axios.put(`http://localhost:3001/api/put/test/${id}`, {
             testName: test.NazwaBadania,
             cost: test.Koszt,
@@ -45,14 +61,17 @@ function ModifyTestInfo() {
                 <div>
                     <label>Name:</label>
                     <input type="text" value={test.NazwaBadania} onChange={(e) => setTest({ ...test, NazwaBadania: e.target.value })} />
+                    {errors.testName && <p>{errors.testName}</p>}
                 </div>
                 <div>
                     <label>Cost:</label>
                     <input type="number" value={test.Koszt} onChange={(e) => setTest({ ...test, Koszt: e.target.value })} />
+                    {errors.cost && <p>{errors.cost}</p>}
                 </div>
                 <div>
                     <label>Description:</label>
                     <input type="text" value={test.OpisBadania} onChange={(e) => setTest({ ...test, OpisBadania: e.target.value })} />
+                    {errors.description && <p>{errors.description}</p>}
                 </div>
                 <button type="submit">Save Changes</button>
             </form>
