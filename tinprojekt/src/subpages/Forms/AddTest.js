@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function AddTest() {
     const [testName, setTestName] = useState('');
@@ -9,9 +10,14 @@ function AddTest() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // jakaś logika tu kiedyś będzie
-        console.log('New Test:', { testName, cost, description });
-        navigate('/testlist');
+        axios.post('http://localhost:3001/api/post/test', { testName, cost, description })
+            .then(response => {
+                console.log('New Test added successfully:', response.data);
+                navigate('/testlist');
+            })
+            .catch(error => {
+                console.error('There was an error adding the test!', error);
+            });
     };
 
     return (

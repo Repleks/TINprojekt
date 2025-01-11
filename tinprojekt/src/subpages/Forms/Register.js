@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Register() {
     const [username, setUsername] = useState('');
@@ -8,9 +9,14 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // jakaś logika tu kiedyś będzie
-        console.log(`User registered: ${username}`);
-        navigate('/');
+        axios.post('http://localhost:3001/api/post/register', { username, password })
+            .then(response => {
+                console.log('User registered:', response.data);
+                navigate('/');
+            })
+            .catch(error => {
+                console.error('There was an error registering the user!', error);
+            });
     };
 
     return (

@@ -8,11 +8,8 @@ function Login({ onLogin }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // jakaś logika tu kiedyś będzie
         onLogin(username, password);
-        if ((username === 'admin' && password === 'admin') || (username === 'user' && password === 'user')) {
-            navigate('/');
-        }
+        navigate('/');
     };
 
     return (

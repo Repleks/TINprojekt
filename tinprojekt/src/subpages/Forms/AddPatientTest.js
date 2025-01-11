@@ -1,15 +1,23 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function AddPatientTest() {
     const { id } = useParams();
     const [testId, setTestId] = useState('');
     const [date, setDate] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Add test', testId, date, 'for patient', id);
-        // jakaś logika tu kiedyś będzie
+        axios.post(`http://localhost:3001/api/post/patient/${id}/test`, { testId, date })
+            .then(response => {
+                console.log('Test added successfully:', response.data);
+                navigate(`/patientslist`);
+            })
+            .catch(error => {
+                console.error('There was an error adding the test!', error);
+            });
     };
 
     return (
@@ -18,11 +26,11 @@ function AddPatientTest() {
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Test ID:</label>
-                    <input type="text" value={testId} onChange={(e) => setTestId(e.target.value)} />
+                    <input type="text" value={testId} onChange={(e) => setTestId(e.target.value)} required />
                 </div>
                 <div>
                     <label>Date:</label>
-                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                    <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
                 </div>
                 <button type="submit">Add Test</button>
             </form>
