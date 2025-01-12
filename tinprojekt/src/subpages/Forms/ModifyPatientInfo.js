@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function ModifyPatientInfo() {
+function ModifyPatientInfo({ language }) {
     const { id } = useParams();
     const navigate = useNavigate();
     const [patient, setPatient] = useState(null);
@@ -22,12 +22,12 @@ function ModifyPatientInfo() {
 
     const validate = () => {
         const errors = {};
-        if (!user.Imie) errors.firstName = 'First Name is required';
-        if (!user.Nazwisko) errors.lastName = 'Last Name is required';
-        if (!user.Email) errors.email = 'Email is required';
-        if (!patient.PESEL) errors.pesel = 'PESEL is required';
-        if (isNaN(user.Wiek)) errors.age = 'Age must be a number';
-        if(user.Wiek < 0) errors.age = 'Age must be a positive number';
+        if (!user.Imie) errors.firstName = language === 'en' ? 'First Name is required' : 'Imię jest wymagane';
+        if (!user.Nazwisko) errors.lastName = language === 'en' ? 'Last Name is required' : 'Nazwisko jest wymagane';
+        if (!user.Email) errors.email = language === 'en' ? 'Email is required' : 'Email jest wymagany';
+        if (!patient.PESEL) errors.pesel = 'PESEL jest wymagany';
+        if (isNaN(user.Wiek)) errors.age = language === 'en' ? 'Age must be a number' : 'Wiek musi być liczbą';
+        if (user.Wiek < 0) errors.age = language === 'en' ? 'Age must be a positive number' : 'Wiek musi być liczbą dodatnią';
         return errors;
     };
 
@@ -56,20 +56,20 @@ function ModifyPatientInfo() {
     };
 
     if (!patient || !user) {
-        return <div>Loading...</div>;
+        return <div>{language === 'en' ? 'Loading...' : 'Ładowanie...'}</div>;
     }
 
     return (
         <div>
-            <h2>Modify Patient Info</h2>
+            <h2>{language === 'en' ? 'Modify Patient Info' : 'Modyfikuj informacje o pacjencie'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Name:</label>
+                    <label>{language === 'en' ? 'First Name:' : 'Imię:'}</label>
                     <input type="text" value={user.Imie} onChange={(e) => setUser({ ...user, Imie: e.target.value })} />
                     {errors.firstName && <p>{errors.firstName}</p>}
                 </div>
                 <div>
-                    <label>Surname:</label>
+                    <label>{language === 'en' ? 'Last Name:' : 'Nazwisko:'}</label>
                     <input type="text" value={user.Nazwisko} onChange={(e) => setUser({ ...user, Nazwisko: e.target.value })} />
                     {errors.lastName && <p>{errors.lastName}</p>}
                 </div>
@@ -79,7 +79,7 @@ function ModifyPatientInfo() {
                     {errors.email && <p>{errors.email}</p>}
                 </div>
                 <div>
-                    <label>Age:</label>
+                    <label>{language === 'en' ? 'Age:' : 'Wiek:'}</label>
                     <input type="number" value={user.Wiek} onChange={(e) => setUser({ ...user, Wiek: e.target.value })} />
                     {errors.age && <p>{errors.age}</p>}
                 </div>
@@ -88,7 +88,7 @@ function ModifyPatientInfo() {
                     <input type="text" value={patient.PESEL} onChange={(e) => setPatient({ ...patient, PESEL: e.target.value })} />
                     {errors.pesel && <p>{errors.pesel}</p>}
                 </div>
-                <button type="submit">Save Changes</button>
+                <button type="submit">{language === 'en' ? 'Save Changes' : 'Zapisz zmiany'}</button>
             </form>
         </div>
     );

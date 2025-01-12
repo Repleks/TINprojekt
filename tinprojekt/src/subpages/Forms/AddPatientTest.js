@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-function AddPatientTest() {
+function AddPatientTest({ language }) {
     const { id } = useParams();
     const [testId, setTestId] = useState('');
     const [date, setDate] = useState('');
@@ -11,8 +11,8 @@ function AddPatientTest() {
 
     const validate = () => {
         const errors = {};
-        if (!testId) errors.testId = 'Test ID is required';
-        if (!date) errors.date = 'Date is required';
+        if (!testId) errors.testId = language === 'en' ? 'Test ID is required' : 'ID badania jest wymagane';
+        if (!date) errors.date = language === 'en' ? 'Date is required' : 'Data jest wymagana';
         return errors;
     };
 
@@ -36,19 +36,19 @@ function AddPatientTest() {
 
     return (
         <div>
-            <h2>Add Test for Patient {id}</h2>
+            <h2>{language === 'en' ? `Add Test for Patient ${id}` : `Dodaj badanie dla pacjenta ${id}`}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Test ID:</label>
+                    <label>{language === 'en' ? 'Test ID:' : 'ID badania:'}</label>
                     <input type="text" value={testId} onChange={(e) => setTestId(e.target.value)} required />
                     {errors.testId && <p>{errors.testId}</p>}
                 </div>
                 <div>
-                    <label>Date:</label>
+                    <label>{language === 'en' ? 'Date:' : 'Data:'}</label>
                     <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
                     {errors.date && <p>{errors.date}</p>}
                 </div>
-                <button type="submit">Add Test</button>
+                <button type="submit">{language === 'en' ? 'Add Test' : 'Dodaj badanie'}</button>
             </form>
         </div>
     );

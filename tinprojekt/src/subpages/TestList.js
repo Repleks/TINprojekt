@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function TestList({ userRole }) {
+function TestList({ userRole, language }) {
     const [tests, setTests] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -40,13 +40,13 @@ function TestList({ userRole }) {
         return (
             <li key={index}>
                 {userRole === 2 && <p>ID: {item.Badanie_ID}</p>}
-                <p>Test Name: {item.NazwaBadania}</p>
-                <p>Cost: {item.Koszt}</p>
-                <p>Test Summary: {item.OpisBadania}</p>
+                <p>{language === 'en' ? 'Test Name' : 'Nazwa badania'}: {item.NazwaBadania}</p>
+                <p>{language === 'en' ? 'Cost' : 'Koszt'}: {item.Koszt}</p>
+                <p>{language === 'en' ? 'Test Summary' : 'Opis badania'}: {item.OpisBadania}</p>
                 {userRole === 2 && (
                     <>
-                        <Link to={`/modifytestinfo/${item.Badanie_ID}`}><button>Modify Test</button></Link>
-                        <button onClick={() => handleDelete(item.Badanie_ID)}>Delete Test</button>
+                        <Link to={`/modifytestinfo/${item.Badanie_ID}`}><button>{language === 'en' ? 'Modify Test' : 'Modyfikuj badanie'}</button></Link>
+                        <button onClick={() => handleDelete(item.Badanie_ID)}>{language === 'en' ? 'Delete Test' : 'Usuń badanie'}</button>
                     </>
                 )}
             </li>
@@ -73,14 +73,14 @@ function TestList({ userRole }) {
 
     return (
         <div>
-            <h2>Test List</h2>
+            <h2>{language === 'en' ? 'Test List' : 'Lista badań'}</h2>
             <ul className="custom-list">
                 {renderItems}
             </ul>
             <ul id="page-numbers">
                 {renderPageNumbers}
             </ul>
-            {userRole === 2 && <Link to="/addtest"><button>Add New Test</button></Link>}
+            {userRole === 2 && <Link to="/addtest"><button>{language === 'en' ? 'Add New Test' : 'Dodaj nowe badanie'}</button></Link>}
         </div>
     );
 }

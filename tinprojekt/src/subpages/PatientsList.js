@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function PatientsList() {
+function PatientsList({ language }) {
     const [patients, setPatients] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -51,16 +51,16 @@ function PatientsList() {
     const renderItems = currentItems.map((item, index) => {
         return (
             <li key={index}>
-                <p>Pacjent_ID: {item.Pacjent_ID}</p>
+                <p>{language === 'en' ? 'Patient ID' : 'ID pacjenta'}: {item.Pacjent_ID}</p>
                 <p>PESEL: {item.PESEL}</p>
-                <p>Imie: {item.Imie}</p>
-                <p>Nazwisko: {item.Nazwisko}</p>
+                <p>{language === 'en' ? 'First Name' : 'Imię'}: {item.Imie}</p>
+                <p>{language === 'en' ? 'Last Name' : 'Nazwisko'}: {item.Nazwisko}</p>
                 <p>Email: {item.Email}</p>
-                <p>Wiek: {item.Wiek}</p>
-                <Link to={`/addpatienttest/${item.Pacjent_ID}`}><button>Add Test</button></Link>
-                <Link to={`/patientinfo/${item.Pacjent_ID}`}><button>View Info</button></Link>
-                <Link to={`/patienttests/${item.Pacjent_ID}`}><button>View Tests</button></Link>
-                <button onClick={() => handleDelete(item.Pacjent_ID)}>Delete User</button>
+                <p>{language === 'en' ? 'Age' : 'Wiek'}: {item.Wiek}</p>
+                <Link to={`/addpatienttest/${item.Pacjent_ID}`}><button>{language === 'en' ? 'Add Test' : 'Dodaj badanie'}</button></Link>
+                <Link to={`/patientinfo/${item.Pacjent_ID}`}><button>{language === 'en' ? 'View Info' : 'Zobacz informacje'}</button></Link>
+                <Link to={`/patienttests/${item.Pacjent_ID}`}><button>{language === 'en' ? 'View Tests' : 'Zobacz badania'}</button></Link>
+                <button onClick={() => handleDelete(item.Pacjent_ID)}>{language === 'en' ? 'Delete User' : 'Usuń użytkownika'}</button>
             </li>
         );
     });
@@ -85,7 +85,7 @@ function PatientsList() {
 
     return (
         <div>
-            <h2>Patients List</h2>
+            <h2>{language === 'en' ? 'Patients List' : 'Lista pacjentów'}</h2>
             <ul className="custom-list">
                 {renderItems}
             </ul>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function AddTest() {
+function AddTest({ language }) {
     const [testName, setTestName] = useState('');
     const [cost, setCost] = useState('');
     const [description, setDescription] = useState('');
@@ -11,10 +11,10 @@ function AddTest() {
 
     const validate = () => {
         const errors = {};
-        if (!testName) errors.testName = 'Test Name is required';
-        if (!cost) errors.cost = 'Cost is required';
-        if (isNaN(cost)) errors.cost = 'Cost must be a number';
-        if (!description) errors.description = 'Description is required';
+        if (!testName) errors.testName = language === 'en' ? 'Test Name is required' : 'Nazwa badania jest wymagana';
+        if (!cost) errors.cost = language === 'en' ? 'Cost is required' : 'Koszt jest wymagany';
+        if (isNaN(cost)) errors.cost = language === 'en' ? 'Cost must be a number' : 'Koszt musi być liczbą';
+        if (!description) errors.description = language === 'en' ? 'Description is required' : 'Opis jest wymagany';
         return errors;
     };
 
@@ -38,10 +38,10 @@ function AddTest() {
 
     return (
         <div>
-            <h2>Add New Test</h2>
+            <h2>{language === 'en' ? 'Add New Test' : 'Dodaj nowe badanie'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Test Name:</label>
+                    <label>{language === 'en' ? 'Test Name:' : 'Nazwa badania:'}</label>
                     <input
                         type="text"
                         value={testName}
@@ -51,7 +51,7 @@ function AddTest() {
                     {errors.testName && <p>{errors.testName}</p>}
                 </div>
                 <div>
-                    <label>Cost:</label>
+                    <label>{language === 'en' ? 'Cost:' : 'Koszt:'}</label>
                     <input
                         type="number"
                         value={cost}
@@ -61,7 +61,7 @@ function AddTest() {
                     {errors.cost && <p>{errors.cost}</p>}
                 </div>
                 <div>
-                    <label>Description:</label>
+                    <label>{language === 'en' ? 'Description:' : 'Opis:'}</label>
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -69,7 +69,7 @@ function AddTest() {
                     />
                     {errors.description && <p>{errors.description}</p>}
                 </div>
-                <button type="submit">Add Test</button>
+                <button type="submit">{language === 'en' ? 'Add Test' : 'Dodaj badanie'}</button>
             </form>
         </div>
     );

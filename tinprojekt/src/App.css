@@ -219,3 +219,27 @@ form button:hover {
 .home a:hover {
   background-color: darkblue;
 }
+
+.language-toggle-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.language-toggle-container button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.custom-nav ul li .nav-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+.custom-nav ul li .nav-button:hover {
+  background-color: #555;
+}

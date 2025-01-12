@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 
-function PatientInfo() {
+function PatientInfo({ language }) {
     const { id } = useParams();
     const [patient, setPatient] = useState(null);
 
@@ -17,20 +17,20 @@ function PatientInfo() {
     }, [id]);
 
     if (!patient) {
-        return <div>Loading...</div>;
+        return <div>{language === 'en' ? 'Loading...' : 'Ładowanie...'}</div>;
     }
 
     return (
         <div className="patient-info">
-            <h2>Patient Info</h2>
-            <h3>User Details</h3>
-            <p>Name: {patient.Imie} {patient.Nazwisko}</p>
+            <h2>{language === 'en' ? 'Patient Info' : 'Informacje o pacjencie'}</h2>
+            <h3>{language === 'en' ? 'User Details' : 'Szczegóły użytkownika'}</h3>
+            <p>{language === 'en' ? 'Name' : 'Imię'}: {patient.Imie} {patient.Nazwisko}</p>
             <p>Email: {patient.Email}</p>
-            <p>Age: {patient.Wiek}</p>
-            <p>Joined: {patient.DataDolaczenia}</p>
-            <h3>Patient Details</h3>
+            <p>{language === 'en' ? 'Age' : 'Wiek'}: {patient.Wiek}</p>
+            <p>{language === 'en' ? 'Joined' : 'Dołączył'}: {patient.DataDolaczenia}</p>
+            <h3>{language === 'en' ? 'Patient Details' : 'Szczegóły pacjenta'}</h3>
             <p>PESEL: {patient.PESEL}</p>
-            <Link to={`/modifypatientinfo/${id}`}><button>Modify Info</button></Link>
+            <Link to={`/modifypatientinfo/${id}`}><button>{language === 'en' ? 'Modify Info' : 'Modyfikuj informacje'}</button></Link>
         </div>
     );
 }

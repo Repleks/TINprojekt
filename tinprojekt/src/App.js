@@ -16,6 +16,7 @@ import axios from 'axios';
 function App() {
     const [userRole, setUserRole] = useState(null);
     const [patientId, setPatientId] = useState(null);
+    const [language, setLanguage] = useState('en'); // Language state
 
     const handleLogin = (username, password) => {
         axios.post('http://localhost:3001/api/post/login', { username, password })
@@ -39,48 +40,65 @@ function App() {
             });
     };
 
+    const toggleLanguage = () => {
+        setLanguage(prevLanguage => (prevLanguage === 'en' ? 'pl' : 'en'));
+    };
+
     return (
         <Router>
             <div className="App">
                 <nav className="custom-nav">
                     <ul>
-                        <li><Link to="/">Main Page</Link></li>
-                        <li><Link to="/testlist">Tests list</Link></li>
-                        {userRole === 1 && <li><Link to={`/patienttests/${patientId}`}>Patient Tests</Link></li>}
-                        {userRole === 1 && <li><Link to={`/patientinfo/${patientId}`}>Patient Info</Link></li>}
-                        {userRole === 2 && <li><Link to="/patientslist">Patients List</Link></li>}
+                        <li><Link to="/">{language === 'en' ? 'Main Page' : 'Strona Główna'}</Link></li>
+                        <li><Link to="/testlist">{language === 'en' ? 'Tests list' : 'Lista badań'}</Link></li>
+                        {userRole === 1 && <li><Link to={`/patienttests/${patientId}`}>{language === 'en' ? 'Patient Tests' : 'Badania pacjenta'}</Link></li>}
+                        {userRole === 1 && <li><Link to={`/patientinfo/${patientId}`}>{language === 'en' ? 'Patient Info' : 'Informacje o pacjencie'}</Link></li>}
+                        {userRole === 2 && <li><Link to="/patientslist">{language === 'en' ? 'Patients List' : 'Lista pacjentów'}</Link></li>}
                         {userRole ? (
-                            <li className="right"><LogoutButton setUserRole={setUserRole} setPatientId={setPatientId}/></li>
+                            <li className="right"><LogoutButton setUserRole={setUserRole} setPatientId={setPatientId} language={language} /></li>
                         ) : (
                             <>
-                                <li className="right"><Link to="/login">Login</Link></li>
-                                <li className="right"><Link to="/register">Register</Link></li>
+                                <li className="right"><Link to="/login">{language === 'en' ? 'Login' : 'Zaloguj się'}</Link></li>
+                                <li className="right"><Link to="/register">{language === 'en' ? 'Register' : 'Zarejestruj się'}</Link></li>
                             </>
                         )}
+                        <li className="right">
+                            <button className="nav-button" onClick={toggleLanguage}>{language === 'en' ? 'Toggle Language' : 'Zmień język'}</button>
+                        </li>
                     </ul>
                 </nav>
                 {userRole === 1 && (
-                    <button onClick={() => handleUpgradeAccess(patientId)}>Gain Admin Access</button>
+                    <button onClick={() => handleUpgradeAccess(patientId)}>{language === 'en' ? 'Gain Admin Access' : 'Uzyskaj dostęp administratora'}</button>
                 )}
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/testlist" element={<TestList userRole={userRole}/>}/>
-                    <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/patienttests/:id" element={<PatientTests userId={patientId} />} />
-                    <Route path="/patientslist" element={<PatientsList/>}/>
-                    <Route path="/patientinfo/:id" element={<PatientInfo userId={patientId} />} />
-                    <Route path="/addpatienttest/:id" element={<AddPatientTest />} />
-                    <Route path="/modifypatientinfo/:id" element={<ModifyPatientInfo />} />
-                    <Route path="/modifytestinfo/:id" element={<ModifyTestInfo />} />
-                    <Route path="/addtest" element={<AddTest />} />
+                    <Route path="/" element={language === 'en' ? <HomeEn /> : <HomePl />} />
+                    <Route path="/testlist" element={<TestList userRole={userRole} language={language} />}/>
+                    <Route path="/login" element={<Login onLogin={handleLogin} language={language} />}/>
+                    <Route path="/register" element={<Register language={language} />}/>
+                    <Route path="/patienttests/:id" element={<PatientTests userId={patientId} language={language} />} />
+                    <Route path="/patientslist" element={<PatientsList language={language} />}/>
+                    <Route path="/patientinfo/:id" element={<PatientInfo userId={patientId} language={language} />} />
+                    <Route path="/addpatienttest/:id" element={<AddPatientTest language={language} />} />
+                    <Route path="/modifypatientinfo/:id" element={<ModifyPatientInfo language={language} />} />
+                    <Route path="/modifytestinfo/:id" element={<ModifyTestInfo language={language} />} />
+                    <Route path="/addtest" element={<AddTest language={language} />} />
                 </Routes>
             </div>
         </Router>
     );
 }
 
-function Home() {
+function HomeEn() {
+    return (
+        <div className="home">
+            <h1>Medical Clinic</h1>
+            <h3>List of available tests</h3>
+            <Link to="/testlist">Go to the list of tests</Link>
+        </div>
+    );
+}
+
+function HomePl() {
     return (
         <div className="home">
             <h1>Klinika medyczna</h1>
@@ -90,7 +108,7 @@ function Home() {
     );
 }
 
-function LogoutButton({ setUserRole, setPatientId }) {
+function LogoutButton({ setUserRole, setPatientId, language }) {
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -100,7 +118,7 @@ function LogoutButton({ setUserRole, setPatientId }) {
     };
 
     return (
-        <button className="nav-button" onClick={handleLogout}>Logout</button>
+        <button className="nav-button" onClick={handleLogout}>{language === 'en' ? 'Logout' : 'Wyloguj się'}</button>
     );
 }
 

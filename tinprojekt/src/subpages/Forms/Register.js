@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Register() {
+function Register({ language }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -10,9 +10,9 @@ function Register() {
 
     const validate = () => {
         const errors = {};
-        if (!username) errors.username = 'Username is required';
-        if (!password) errors.password = 'Password is required';
-        if (password.length < 4) errors.password = 'Password must be at least 4 characters long';
+        if (!username) errors.username = language === 'en' ? 'Username is required' : 'Nazwa użytkownika jest wymagana';
+        if (!password) errors.password = language === 'en' ? 'Password is required' : 'Hasło jest wymagane';
+        if (password.length < 4) errors.password = language === 'en' ? 'Password must be at least 4 characters long' : 'Hasło musi mieć co najmniej 4 znaki';
         return errors;
     };
 
@@ -36,19 +36,19 @@ function Register() {
 
     return (
         <div>
-            <h2>Register Page</h2>
+            <h2>{language === 'en' ? 'Register Page' : 'Strona rejestracji'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Username:</label>
+                    <label>{language === 'en' ? 'Username:' : 'Nazwa użytkownika:'}</label>
                     <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     {errors.username && <p>{errors.username}</p>}
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label>{language === 'en' ? 'Password:' : 'Hasło:'}</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     {errors.password && <p>{errors.password}</p>}
                 </div>
-                <button type="submit">Register</button>
+                <button type="submit">{language === 'en' ? 'Register' : 'Zarejestruj się'}</button>
             </form>
         </div>
     );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-function PatientTests() {
+function PatientTests({ language }) {
     const { id } = useParams();
     const [tests, setTests] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -28,10 +28,10 @@ function PatientTests() {
 
     const renderItems = currentItems.map((test, index) => (
         <li key={index}>
-            <p>Test Name: {test.NazwaBadania}</p>
-            <p>Cost: {test.Koszt}</p>
-            <p>Description: {test.OpisBadania}</p>
-            <p>Date: {test.DataBadania}</p>
+            <p>{language === 'en' ? 'Test Name' : 'Nazwa badania'}: {test.NazwaBadania}</p>
+            <p>{language === 'en' ? 'Cost' : 'Koszt'}: {test.Koszt}</p>
+            <p>{language === 'en' ? 'Description' : 'Opis badania'}: {test.OpisBadania}</p>
+            <p>{language === 'en' ? 'Date' : 'Data'}: {test.DataBadania}</p>
         </li>
     ));
 
@@ -53,7 +53,7 @@ function PatientTests() {
 
     return (
         <div>
-            <h2>Patient Tests</h2>
+            <h2>{language === 'en' ? 'Patient Tests' : 'Badania pacjenta'}</h2>
             <ul className="custom-list">
                 {renderItems}
             </ul>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function ModifyTestInfo() {
+function ModifyTestInfo({ language }) {
     const { id } = useParams();
     const navigate = useNavigate();
     const [test, setTest] = useState(null);
@@ -21,10 +21,10 @@ function ModifyTestInfo() {
 
     const validate = () => {
         const errors = {};
-        if (!test.NazwaBadania) errors.testName = 'Test Name is required';
-        if (!test.Koszt) errors.cost = 'Cost is required';
-        if (isNaN(test.Koszt)) errors.cost = 'Cost must be a number';
-        if (!test.OpisBadania) errors.description = 'Description is required';
+        if (!test.NazwaBadania) errors.testName = language === 'en' ? 'Test Name is required' : 'Nazwa badania jest wymagana';
+        if (!test.Koszt) errors.cost = language === 'en' ? 'Cost is required' : 'Koszt jest wymagany';
+        if (isNaN(test.Koszt)) errors.cost = language === 'en' ? 'Cost must be a number' : 'Koszt musi być liczbą';
+        if (!test.OpisBadania) errors.description = language === 'en' ? 'Description is required' : 'Opis jest wymagany';
         return errors;
     };
 
@@ -51,29 +51,29 @@ function ModifyTestInfo() {
     };
 
     if (!test) {
-        return <div>Loading...</div>;
+        return <div>{language === 'en' ? 'Loading...' : 'Ładowanie...'}</div>;
     }
 
     return (
         <div>
-            <h2>Modify Test Info</h2>
+            <h2>{language === 'en' ? 'Modify Test Info' : 'Modyfikuj informacje o badaniu'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Name:</label>
+                    <label>{language === 'en' ? 'Test Name:' : 'Nazwa badania:'}</label>
                     <input type="text" value={test.NazwaBadania} onChange={(e) => setTest({ ...test, NazwaBadania: e.target.value })} />
                     {errors.testName && <p>{errors.testName}</p>}
                 </div>
                 <div>
-                    <label>Cost:</label>
+                    <label>{language === 'en' ? 'Cost:' : 'Koszt:'}</label>
                     <input type="number" value={test.Koszt} onChange={(e) => setTest({ ...test, Koszt: e.target.value })} />
                     {errors.cost && <p>{errors.cost}</p>}
                 </div>
                 <div>
-                    <label>Description:</label>
+                    <label>{language === 'en' ? 'Description:' : 'Opis:'}</label>
                     <input type="text" value={test.OpisBadania} onChange={(e) => setTest({ ...test, OpisBadania: e.target.value })} />
                     {errors.description && <p>{errors.description}</p>}
                 </div>
-                <button type="submit">Save Changes</button>
+                <button type="submit">{language === 'en' ? 'Save Changes' : 'Zapisz zmiany'}</button>
             </form>
         </div>
     );
