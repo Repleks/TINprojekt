@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-function TestList({ userRole }) {
+function ListaBadan({ userRole }) {
     const [tests, setTests] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
 
     useEffect(() => {
+        console.log('ListaBadan component mounted');
         axios.get('http://localhost:3001/api/get/tests')
             .then(response => {
                 setTests(response.data);
@@ -73,7 +74,7 @@ function TestList({ userRole }) {
 
     return (
         <div>
-            <h2>Test List</h2>
+            <h2>Lista Badań</h2>
             <ul className="custom-list">
                 {renderItems}
             </ul>
@@ -85,4 +86,4 @@ function TestList({ userRole }) {
     );
 }
 
-export default TestList;
+export default ListaBadan;

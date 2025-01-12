@@ -85,9 +85,7 @@ function Home() {
         <div className="home">
             <h1>Klinika medyczna</h1>
             <h3>Lista dostępnych badań</h3>
-            <Link to="/testlist">
-                <a href="/testlist">Przejdź do listy badań</a>
-            </Link>
+            <Link to="/testlist">Przejdź do listy badań</Link>
         </div>
     );
 }
