@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
-import TestList from './Subpages/TestList';
-import Login from './Subpages/Forms/Login';
-import Register from './Subpages/Forms/Register';
-import PatientTests from './Subpages/PatientTests';
-import PatientsList from './Subpages/PatientsList';
-import PatientInfo from './Subpages/PatientInfo';
-import AddPatientTest from './Subpages/Forms/AddPatientTest';
-import ModifyPatientInfo from './Subpages/Forms/ModifyPatientInfo';
-import ModifyTestInfo from './Subpages/Forms/ModifyTestInfo';
-import AddTest from './Subpages/Forms/AddTest';
+import TestList from './subpages/TestList';
+import Login from './subpages/Forms/Login';
+import Register from './subpages/Forms/Register';
+import PatientTests from './subpages/PatientTests';
+import PatientsList from './subpages/PatientsList';
+import PatientInfo from './subpages/PatientInfo';
+import AddPatientTest from './subpages/Forms/AddPatientTest';
+import ModifyPatientInfo from './subpages/Forms/ModifyPatientInfo';
+import ModifyTestInfo from './subpages/Forms/ModifyTestInfo';
+import AddTest from './subpages/Forms/AddTest';
 import axios from 'axios';
 
 function App() {
     const [userRole, setUserRole] = useState(null);
     const [patientId, setPatientId] = useState(null);
-    const [language, setLanguage] = useState('en'); // Language state
+    const [language, setLanguage] = useState('en'); 
 
     const handleLogin = (username, password) => {
         axios.post('http://localhost:3001/api/post/login', { username, password })

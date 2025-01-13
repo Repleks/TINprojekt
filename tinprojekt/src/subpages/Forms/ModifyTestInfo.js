@@ -23,6 +23,7 @@ function ModifyTestInfo({ language }) {
         const errors = {};
         if (!test.NazwaBadania) errors.testName = language === 'en' ? 'Test Name is required' : 'Nazwa badania jest wymagana';
         if (!test.Koszt) errors.cost = language === 'en' ? 'Cost is required' : 'Koszt jest wymagany';
+        if (test.Koszt < 0) errors.cost = language === 'en' ? 'Cost must be a positive number' : 'Koszt musi być liczbą dodatnią';
         if (isNaN(test.Koszt)) errors.cost = language === 'en' ? 'Cost must be a number' : 'Koszt musi być liczbą';
         if (!test.OpisBadania) errors.description = language === 'en' ? 'Description is required' : 'Opis jest wymagany';
         return errors;
